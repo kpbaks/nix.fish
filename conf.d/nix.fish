@@ -15,6 +15,7 @@ function __nix.fish::abbr::list
 end
 
 abbr -a n nix
+abbr -a nb nix build
 abbr -a nd nix develop --command fish
 abbr -a nf nix flake
 abbr -a nfc nix flake check
@@ -24,7 +25,10 @@ abbr -a nfmd nix flake metadata
 abbr -a np nix profile
 abbr -a npl nix profile list
 abbr -a npi --set-cursor "nix profile install nixpkgs#%"
-abbr -a npu nix profile update "'.'"
+abbr -a npl nix profile list
+abbr -a npr nix profile remove
+abbr -a npu nix profile upgrade "'.'"
+abbr -a nps --set-cursor 'nix profile list | string match "*%*"'
 
 abbr -a nr nix run
 abbr -a nrp nix repl
