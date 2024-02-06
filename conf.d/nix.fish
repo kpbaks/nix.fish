@@ -17,10 +17,17 @@ end
 abbr -a n nix
 abbr -a nb nix build
 abbr -a nd nix develop --command fish
+abbr -a ne nix eval
+abbr -a nef nix eval --file
+abbr -a nej nix eval --json
+abbr -a nejf nix eval --json --file
+
 abbr -a nf nix flake
 abbr -a nfc nix flake check
 abbr -a nfi nix flake init
 abbr -a nfmd nix flake metadata
+
+abbr -a nh nix-hash --type sha256 --base32
 
 abbr -a np nix profile
 abbr -a npl nix profile list
