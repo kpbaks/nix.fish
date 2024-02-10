@@ -58,6 +58,13 @@ function yaml2nix -d "convert a YAML structure to its equivalent nix representat
         return
     end
 
+    if not command --query yq
+        est -l reset (set_color normal)
+        printf "%serror%s: %syq%s (https://mikefarah.gitbook.io/yq/) is not installed\n" (set_color red) $reset (set_color $fish_color_command) $reset
+        printf "It is needed for this function to work\n"
+        printf "Please install version 4.x\n"
+        return 1
+    end
 
     # Create a temporary file to store the json structure
     set -f jsonfile (command mktemp --suffix=.json)
