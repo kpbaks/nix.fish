@@ -19,7 +19,7 @@ function toml2nix -d "convert a TOML structure to its equivalent nix representat
         printf "\t%stoml2nix%s <%stomlfile%s>   [options]\n" (set_color $fish_color_command) $reset $cyan $reset
         printf "\n"
         printf "%sOPTIONS%s\n" $yellow $reset
-        printf "\t%s-h%s, %s--help%s show this help message\n" $green $reset $green $reset
+        printf "\t%s-h%s, %s--help%s  show this help message\n" $green $reset $green $reset
         printf "\t%s-f%s, %s--force%s ignore that the input file does not have a .toml extension\n" $green $reset $green $reset
         printf "\n"
         printf "%sEXAMPLES%s\n" $yellow $reset

@@ -19,7 +19,7 @@ function json2nix -d "convert a json structure to its equivalent nix representat
         printf "\t%sjson2nix%s <%sjsonfile%s>   [options]\n" (set_color $fish_color_command) $reset $cyan $reset
         printf "\n"
         printf "%sOPTIONS%s\n" $yellow $reset
-        printf "\t%s-h%s, %s--help%s show this help message\n" $green $reset $green $reset
+        printf "\t%s-h%s, %s--help%s  show this help message\n" $green $reset $green $reset
         printf "\t%s-f%s, %s--force%s ignore that the input file does not have a .json extension\n" $green $reset $green $reset
         printf "\n"
         printf "%sEXAMPLES%s\n" $yellow $reset
@@ -28,6 +28,8 @@ function json2nix -d "convert a json structure to its equivalent nix representat
         printf "\t%s%s\n" (printf (echo 'json2nix < file.json' | fish_indent --ansi)) $reset
         printf "\t%s%s\n" (printf (echo 'json2nix file.json' | fish_indent --ansi)) $reset
         printf "\t%s%s\n" (printf (echo 'json2nix --force file.cjson' | fish_indent --ansi)) $reset
+
+        # TODO: insert footer
 
         return 0
     end >&2
@@ -68,7 +70,7 @@ function json2nix -d "convert a json structure to its equivalent nix representat
     if isatty stdout
         # stdout is a tty, so the output is not piped to another command
         # so we can format the output, and print it nicely :)
-        set -l expr "nix eval --file $jsonfile"
+        set -l expr "command nix eval --file $jsonfile"
         if command --query alejandra
             set -a expr " | command alejandra --quiet"
         end
@@ -80,7 +82,7 @@ function json2nix -d "convert a json structure to its equivalent nix representat
         # echo $expr | fish_indent --ansi
         eval $expr
     else
-        nix eval --file $jsonfile
+        command nix eval --file $jsonfile
     end
 
     command rm $jsonfile

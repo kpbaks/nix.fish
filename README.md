@@ -1,5 +1,7 @@
 # nix.fish
 
+Some abbreviations and functions to make it easier to work with the `nix` package manager, and the `NixOS` ecosystem.
+
 ## Installation
 ```fish
 fisher install kpbaks/nix.fish
@@ -28,3 +30,13 @@ abbr -a hm home-manager
 abbr -a hms home-manager switch
 abbr -a nosrs -f abbr_nixos_rebuild_switch
 ```
+
+## Functions
+
+`json2nix`
+
+`nix2json`
+
+`toml2nix`
+
+`nix2toml`

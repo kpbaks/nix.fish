@@ -71,3 +71,38 @@ function abbr_nixos_rebuild_switch
     printf "nixos-rebuild switch\n"
 end
 abbr -a nosrs -f abbr_nixos_rebuild_switch
+
+# used by `./completions/*.fish`
+function __nix.fish::complete-extensions
+    if test $PWD = $HOME
+        set -f files * .*
+        for f in $files
+            # test -f $f; or continue
+            for ext in $argv
+                if test (path extension $f) = .$ext
+                    echo $f
+                    break
+                end
+            end
+        end
+    else if command --query fd
+        set -l extensions (printf " -e %s" $argv)
+        eval command fd --hidden $extensions
+    else if command --query find
+        set -l filters (printf " -name '*%s'" $argv)
+        set -l filters (string replace --regex --all '(.+)' -- '-name "*.$1"' $argv | string join " -o ")
+
+        eval command find . -type f \( $filters \)
+    else
+        set -f files ** .*
+        for f in $files
+            # test -f $f; or continue
+            for ext in $argv
+                if test (path extension $f) = .$ext
+                    echo $f
+                    break
+                end
+            end
+        end
+    end
+end

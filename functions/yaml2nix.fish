@@ -19,7 +19,7 @@ function yaml2nix -d "convert a YAML structure to its equivalent nix representat
         printf "\t%syaml2nix%s <%syamlfile%s>   [options]\n" (set_color $fish_color_command) $reset $cyan $reset
         printf "\n"
         printf "%sOPTIONS%s\n" $yellow $reset
-        printf "\t%s-h%s, %s--help%s show this help message\n" $green $reset $green $reset
+        printf "\t%s-h%s, %s--help%s  show this help message\n" $green $reset $green $reset
         printf "\t%s-f%s, %s--force%s ignore that the input file does not have a .yaml extension\n" $green $reset $green $reset
         printf "\n"
         printf "%sEXAMPLES%s\n" $yellow $reset
@@ -59,7 +59,7 @@ function yaml2nix -d "convert a YAML structure to its equivalent nix representat
     end
 
     if not command --query yq
-        est -l reset (set_color normal)
+        set -l reset (set_color normal)
         printf "%serror%s: %syq%s (https://mikefarah.gitbook.io/yq/) is not installed\n" (set_color red) $reset (set_color $fish_color_command) $reset
         printf "It is needed for this function to work\n"
         printf "Please install version 4.x\n"

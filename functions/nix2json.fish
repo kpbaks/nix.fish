@@ -19,7 +19,7 @@ function nix2json -d "evaluate a nix expression and convert it to its json repre
         printf "\t%snix2json%s <%snixfile%s>   [options]\n" (set_color $fish_color_command) $reset $cyan $reset
         printf "\n"
         printf "%sOPTIONS%s\n" $yellow $reset
-        printf "\t%s-h%s, %s--help%s show this help message\n" $green $reset $green $reset
+        printf "\t%s-h%s, %s--help%s  show this help message\n" $green $reset $green $reset
         printf "\t%s-f%s, %s--force%s ignore that the input file does not have a .nix extension\n" $green $reset $green $reset
         printf "\n"
         printf "%sEXAMPLES%s\n" $yellow $reset
@@ -54,7 +54,7 @@ function nix2json -d "evaluate a nix expression and convert it to its json repre
             return 2
         end
 
-        nix2json <$nixfile
+        eval (status function) <$nixfile
         return
     end
 
@@ -64,7 +64,9 @@ function nix2json -d "evaluate a nix expression and convert it to its json repre
         echo $line >>$nixfile
     end
 
+    # TODO: maybe expose `--arg` to the caller
     set -l expr "command nix eval --json --file $nixfile"
+
     if isatty stdout
         if command --query jaq
             set -a expr "| command jaq '.'"
