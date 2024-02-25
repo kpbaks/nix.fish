@@ -55,7 +55,7 @@ end
 
 abbr -a ns -f abbr_nix_search --set-cursor
 
-abbr -a nsh nix shell
+abbr -a nsh --set-cursor 'nix shell nixpkgs#%'
 
 if command --query home-manager
     abbr -a hm home-manager
