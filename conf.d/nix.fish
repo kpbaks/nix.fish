@@ -1,16 +1,16 @@
-function __nix.fish::on::install --on-event nix_install
+function __nix::on::install --on-event nix_install
     # Set universal variables, create bindings, and other initialization logic.
 end
 
-function __nix.fish::on::update --on-event nix_update
+function __nix::on::update --on-event nix_update
     # Migrate resources, print warnings, and other update logic.
 end
 
-function __nix.fish::on::uninstall --on-event nix_uninstall
+function __nix::on::uninstall --on-event nix_uninstall
     # Erase "private" functions, variables, bindings, and other uninstall logic.
 end
 
-function __nix.fish::abbr::list
+function __nix::abbr::list
     string match --entire --regex "^\s*abbr -a" <(status filename) | fish_indent --ansi
 end
 
@@ -59,7 +59,9 @@ abbr -a nsh --set-cursor 'nix shell nixpkgs#%'
 
 if command --query home-manager
     abbr -a hm home-manager
-    abbr -a hms home-manager switch
+    set -l hm_switch_args --cores "'(math (nproc) - 1)'" --print-build-logs
+    abbr -a hms home-manager switch $hm_switch_args
+    abbr -a hmsf home-manager switch $hm_switch_args --flake .
 end
 
 # nixos
@@ -73,7 +75,7 @@ end
 abbr -a nosrs -f abbr_nixos_rebuild_switch
 
 # used by `./completions/*.fish`
-function __nix.fish::complete-extensions
+function __nix::complete_extensions
     if test $PWD = $HOME
         set -f files * .*
         for f in $files
