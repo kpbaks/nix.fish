@@ -59,7 +59,7 @@ abbr -a nsh --set-cursor 'nix shell nixpkgs#%'
 
 if command --query home-manager
     abbr -a hm home-manager
-    set -l hm_switch_args --cores "'(math (nproc) - 1)'" --print-build-logs
+    set -l hm_switch_args --cores "(math (nproc) - 1)" --print-build-logs
     abbr -a hms home-manager switch $hm_switch_args
     abbr -a hmsf home-manager switch $hm_switch_args --flake .
 end
