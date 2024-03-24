@@ -23,6 +23,7 @@ abbr -a nej nix eval --json
 abbr -a nejf nix eval --json --file
 
 abbr -a nf nix flake
+abbr -a nfu nix flake update
 abbr -a nfc nix flake check
 abbr -a nfi nix flake init
 abbr -a nfmd nix flake metadata
