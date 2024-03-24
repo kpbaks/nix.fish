@@ -109,3 +109,15 @@ function __nix::complete_extensions
         end
     end
 end
+
+function __nix::hooks::update-flake --on-variable PWD
+    test -f flake.lock; or return 0
+
+    set -l mtime (path mtime flake.lock)
+    set -l now (command date '+%s')
+    set -l duration (math "$now - $mtime")
+    test $duration -ge 604800; or return 0 # 60 * 60 * 24 * 7
+
+    printf '%s/flake.lock has not been modified in over a week\n' $PWD
+    printf 'run %s%s to update the lock file\n' (printf (echo "nix flake update" | fish_indent --ansi)) (set_color normal)
+end
