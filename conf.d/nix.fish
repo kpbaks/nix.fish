@@ -118,6 +118,8 @@ function __nix::hooks::update-flake --on-variable PWD
     set -l duration (math "$now - $mtime")
     test $duration -ge 604800; or return 0 # 60 * 60 * 24 * 7
 
-    printf '%s/flake.lock has not been modified in over a week\n' $PWD
-    printf 'run %s%s to update the lock file\n' (printf (echo "nix flake update" | fish_indent --ansi)) (set_color normal)
+    set -l reset (set_color normal)
+    set -l blue (set_color blue)
+    printf '%s[nix.fish]%s %s%s%s/flake.lock has not been modified in over a week!\n' $blue $reset (set_color green) $PWD $reset
+    printf '%s[nix.fish]%s run %s%s to update the lock file\n' $blue $reset (printf (echo "nix flake update" | fish_indent --ansi)) $reset
 end
