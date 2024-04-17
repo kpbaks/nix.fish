@@ -57,6 +57,8 @@ end
 abbr -a ns -f abbr_nix_search --set-cursor
 
 abbr -a nsh --set-cursor 'nix shell nixpkgs#%'
+# NIXPKGS_ALLOW_UNFREE=1 nix shell --impure nixpkgs#warp-terminal
+abbr -a nshi --set-cursor 'NIXPKGS_ALLOW_UNFREE=1 nix shell --impure nixpkgs#%'
 
 if command --query home-manager
     abbr -a hm home-manager
