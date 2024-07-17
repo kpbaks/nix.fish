@@ -1,14 +1,14 @@
-function __nix::on::install --on-event nix_install
-    # Set universal variables, create bindings, and other initialization logic.
-end
+# function __nix::on::install --on-event nix_install
+#     # Set universal variables, create bindings, and other initialization logic.
+# end
 
-function __nix::on::update --on-event nix_update
-    # Migrate resources, print warnings, and other update logic.
-end
+# function __nix::on::update --on-event nix_update
+#     # Migrate resources, print warnings, and other update logic.
+# end
 
-function __nix::on::uninstall --on-event nix_uninstall
-    # Erase "private" functions, variables, bindings, and other uninstall logic.
-end
+# function __nix::on::uninstall --on-event nix_uninstall
+#     # Erase "private" functions, variables, bindings, and other uninstall logic.
+# end
 
 function __nix::abbr::list
     string match --entire --regex "^\s*abbr -a" <(status filename) | fish_indent --ansi
@@ -28,7 +28,8 @@ abbr -a nfc nix flake check
 abbr -a nfi nix flake init
 abbr -a nfmd nix flake metadata
 
-abbr -a nh nix-hash --type sha256 --base32
+command -q nh
+or abbr -a nh nix-hash --type sha256 --base32
 
 abbr -a np nix profile
 abbr -a npl nix profile list
