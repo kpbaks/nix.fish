@@ -7,7 +7,8 @@ function nix-store-highlight -d "read from stdin, and highlight every substring 
     set -l github_nix_lang_color '#8180F9'
     set -l reset (set_color normal)
 
-    if isatty stdin; or not isatty stdout
+    # if isatty stdin; or not isatty stdout
+    if isatty stdin
         printf '%serror%s: stdin must be a pipe, not a tty, and stdout must be a tty\n' (set_color red) $reset >&2
         return 2
     end

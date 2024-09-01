@@ -57,12 +57,52 @@ end
 
 abbr -a ns -f abbr_nix_search --set-cursor
 
-abbr -a nsh --set-cursor 'nix shell nixpkgs#%'
+function __abbr_nix_shell
+    # if command -q ,
+    #     # Look for the last invocation of `,`, if any
+    #     # If there is one then suggest that one
+    #     set -n lookback_n 10
+    #     for i in (seq $lookback_n)
+    #         set -l job $history[$i]
+    #         for cmd in (string split '|' -- $job)
+    #             set -l program (string split ' ' -f 1 -- $cmd)
+    #             if test $program = ,
+
+    #             end
+    #         end
+    #     end
+    # end
+
+    echo "nix shell nixpkgs#$package%"
+end
+
+# abbr -a nsh --set-cursor 'nix shell nixpkgs#%'
+abbr -a nsh --set-cursor --function __abbr_nix_shell
 # NIXPKGS_ALLOW_UNFREE=1 nix shell --impure nixpkgs#warp-terminal
 abbr -a nshi --set-cursor 'NIXPKGS_ALLOW_UNFREE=1 nix shell --impure nixpkgs#%'
 
 if command --query home-manager
-    abbr -a hm home-manager
+    # --extra-experimental-features "nix-command flakes"
+    function __abbr_home_manager
+        set -l postfix
+        if test -r /etc/nix/nix.conf
+            set -l experimental_features
+
+            string match --regex --groups-only 'experimental-features = (.+)' </etc/nix/nix.conf \
+                | string split ' ' \
+                | while read --line feature
+                set -a experimental_features $feature
+            end
+
+            contains -- nix-command $experimental_features
+            and contains -- flakes $experimental_features
+            or set -a postfix --extra-experimental-features '"nix-command flakes"'
+        end
+
+        echo "home-manager $postfix"
+    end
+    # abbr -a hm home-manager
+    abbr -a hm -f __abbr_home_manager
     set -l hm_switch_args --cores "(math (nproc) - 1)" --print-build-logs
     abbr -a hms home-manager switch $hm_switch_args
     abbr -a hmsf home-manager switch $hm_switch_args --flake .
@@ -75,8 +115,15 @@ function abbr_nixos_rebuild_switch
         printf "sudo "
     end
     printf "nixos-rebuild switch\n"
+    # TODO: expand to this if the current dir has a flake.nix and configuration.nix
+    # nixos-rebuild switch --use-remote-sudo --flake .
 end
+# TODO: change abbr
 abbr -a nosrs -f abbr_nixos_rebuild_switch
+
+
+abbr -a nsq nix-store --query
+abbr -a nsq nix-store --query
 
 # used by `./completions/*.fish`
 function __nix::complete_extensions
