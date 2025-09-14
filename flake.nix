@@ -13,6 +13,7 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
+      inherit (nixpkgs) lib;
     in
     {
       formatter = pkgs.nixfmt-rfc-style;
@@ -34,7 +35,16 @@
             {
               name = "nix.fish";
               # TODO: filter list to only be *.fish files
-              src = ./.;
+              src =
+                let
+                  fs = lib.fileset;
+                in
+                # (fs.gitTracked ./.)
+                fs.unions [
+                  ./functions
+                  ./completions
+                  ./conf.d
+                ];
             }
           ];
         };
